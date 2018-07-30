@@ -1,0 +1,39 @@
+extends ../layout
+
+block main
+	body
+		h1 Books
+		p
+			a.button(href="/books/new") Create New Book
+		p  
+		form(action="/books/" + "?_method=GET", method="get")
+			div
+				label(for="query") Search by Title, Author, or Genre:
+				input(type="text", name="q")
+				input(type="submit" value="Search")
+		p
+			| Filters 
+			a(href="/books/") All
+			|  | 
+			a(href="/books?filter=overdue") Overdue
+			|  | 
+			a(href="/books?filter=checked_out") Checked Out
+		table
+			thead
+				tr
+					th Book Title
+					th Author
+					th Genre
+					th Year Released
+			tbody 
+				each book in books
+					tr
+						td
+							a(href="/books/" + book.id)= book.title
+						td= book.author
+						td= book.genre
+						td= book.first_published
+		p= "Books in System: " + bookCount
+		p= "Pages: "
+		- for (var x = 1; x <= pages; x++)
+			a(href="/books/?page=" + x)= x + "  "

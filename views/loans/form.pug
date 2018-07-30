@@ -1,0 +1,17 @@
+div
+	label(for="book_id") Book:
+	select(name = "book_id")
+		each book in books
+			option(value=book.id)= book.title
+div 
+	label(for="patron_id") Patron:
+	select(name = "patron_id")
+		each patron in patrons
+			option(value=patron.id)= patron.first_name + " " + patron.last_name
+div
+	label(for="loaned_on") Loaned On:
+	input(type="text", name="loaned_on" value=d(new Date()))
+div
+	label(for="return_by") Return By:
+	input(type="integer", name="return_by" value=d(new Date(+new Date + 604800000)))
+input(type="submit")

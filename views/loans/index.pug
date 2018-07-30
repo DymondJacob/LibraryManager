@@ -1,0 +1,40 @@
+extends ../layout
+
+block main
+	body
+		h1 Loans
+		p
+			a.button(href="/loans/new") Create New Loan
+		p
+			| Filters 
+			a(href="/loans") All
+			|  | 
+			a(href="/loans?filter=overdue") Overdue
+			|  | 
+			a(href="/loans?filter=checked_out") Checked Out
+		table
+			thead
+				tr
+					th Book Title
+					th Patron 
+					th Loaned on
+					th Return by 
+					th Returned on
+					th Action
+			tbody
+				each loan in loans
+					tr
+						td
+							a(href="/books/" + loan.book_id)= loan.Book.title
+						td
+							a(href="/patrons/" + loan.patron_id)= loan.Patron.first_name + " " + loan.Patron.last_name
+						td=d(loan.loaned_on)
+						td=d(loan.return_by)
+						td=d(loan.returned_on)
+						td
+							if !loan.returned_on
+								a.button(href="/loans/" + loan.id + "/return") Return Book
+		p= "Loans in System: " + loanCount
+		p= "Pages: "
+		- for (var x = 1; x <= pages; x++)
+			a(href="/loans/?page=" + x)= x + "  "
